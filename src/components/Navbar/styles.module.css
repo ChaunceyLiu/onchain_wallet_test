@@ -1,0 +1,16 @@
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 20px;
+}
+
+.setting {
+  width: 70px;
+  height: 70px;
+}
+
+.scan {
+  width: 60px;
+  height: 60px;
+}

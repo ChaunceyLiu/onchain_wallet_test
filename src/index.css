@@ -1,0 +1,32 @@
+body {
+  margin: 0;
+  padding: 0;
+  background-color: #0a1e3d;
+}
+:root {
+  /* 设计稿基准：750px */
+  --dvw: calc(100vw / 7.5); /* 1dvw = 设计稿1px */
+  --dvh: calc(100dvh / 1624 * 100); /* 基于iPhone 15 Pro Max高度 */
+  
+  /* 安全区域 */
+  --safe-top: env(safe-area-inset-top, 0px);
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+@media (screen-fold: folded) {
+  :root {
+    --dvh: calc(100dvh * 0.8); /* 折叠屏特殊处理 */
+  }
+}
+
+/* 折叠屏展开状态 */
+@media (screen-fold: folded) and (screen-spanning: single-fold-vertical) {
+  .content {
+    grid-template-columns: 
+      1fr 
+      env(fold-left, 0px) 
+      env(fold-width, 0px) 
+      env(fold-right, 0px) 
+      1fr;
+  }
+}

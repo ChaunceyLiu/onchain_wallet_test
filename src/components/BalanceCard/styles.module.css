@@ -1,0 +1,66 @@
+/* BalanceCard 容器样式 */
+
+p {
+  margin: 0;
+}
+.card {
+  display: flex;
+  flex: 1;
+  overflow-y: auto;
+  padding: 20px;
+  max-width: 100%;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  border-top-left-radius: 40px;
+  border-top-right-radius: 40px;
+  background-color: #f4fafe;
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  width: 100%;
+}
+
+/* CurrencyItem 样式 */
+.item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 36px;
+  background-color: #fff;
+  border-radius: 15px;
+  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.1);
+}
+
+.infoSection {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 16px;
+}
+.icon {
+  width: 80px;
+  height: 80px;
+}
+
+.currencyName {
+  margin: 0;
+  font-size: 16px;
+  color: #1a1a1a;
+}
+
+.usdValue {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+.balance {
+  font-size: 16px;
+  color: #333;
+}
+
+.usdMount {
+  font-size: 16px;
+  color: #c3c8cd;
+}

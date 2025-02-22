@@ -1,0 +1,23 @@
+.bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #fff;
+  padding: 20px 200px;
+  border-top: 2px solid #f3f4f5;
+  text-align: center;
+}
+
+.setting {
+  width: 40px;
+  height: 40px;
+}
+
+.scan {
+  width: 35px;
+  height: 35px;
+}
+
+.focus {
+  color: #4998f3;
+}
