@@ -1,8 +1,10 @@
 import styles from "./styles.module.css";
 import Logo from "@/assets/logo.png";
 import Send from "@/assets/send.png";
+import { useGlobalState } from "@/hooks/useGlobalState";
 
 const Account = () => {
+  const { state } = useGlobalState();
   return (
     <div className={styles.account}>
       <div className={styles.title}>
@@ -12,7 +14,7 @@ const Account = () => {
       </div>
       <div className={styles.money}>
         <span>$</span>
-        <span className={styles.count}>36.68</span>
+        <span className={styles.count}>{state.balance || 0}</span>
         <span>USD</span>
       </div>
       <div className={styles.opt}>

@@ -3,8 +3,9 @@ import { useState, useEffect } from "react";
 import BalanceCard from "@/components/BalanceCard";
 import AdaptiveLayout from "@/components/AdaptiveLayout";
 import Navbar from "@/components/Navbar";
-import Account from "./components/Account";
-import Bottom from "./components/Bottom";
+import Account from "@/components/Account";
+import Bottom from "@/components/Bottom";
+import { StateProvider } from "@/hooks/useGlobalState";
 
 const App = () => {
   const [loading, setLoading] = useState(true);
@@ -17,12 +18,14 @@ const App = () => {
   if (loading) return <div>Loading...</div>;
 
   return (
-    <AdaptiveLayout>
-      <Navbar />
-      <Account />
-      <BalanceCard />
-      <Bottom />
-    </AdaptiveLayout>
+    <StateProvider>
+      <AdaptiveLayout>
+        <Navbar />
+        <Account />
+        <BalanceCard />
+        <Bottom />
+      </AdaptiveLayout>
+    </StateProvider>
   );
 };
 

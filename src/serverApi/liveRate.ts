@@ -1,4 +1,5 @@
-export const liveRate = () => {
+export const liveRate = (_props: any) => {
+
   return Promise.resolve({
     ok: true,
     warning: "",

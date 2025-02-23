@@ -1,4 +1,4 @@
-export const currencies = () => {
+export const currencies = (_props: any) => {
   return Promise.resolve({
     currencies: [
       {

@@ -1,4 +1,4 @@
-export const walletBalance = () => {
+export const walletBalance = (_props: any) => {
   return Promise.resolve({
     ok: true,
     warning: "",
