@@ -1,14 +1,12 @@
 import type { CombinedItem } from "@/types/wallet";
 import CurrencyItem from "./CurrencyItem";
 import styles from "./styles.module.css";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import ErrorBoundary from "@/components/ErrorBoundary";
 import { getCombinedWalletData } from "@/serverApi/CombinedWalletData";
 import { usePolling } from "@/hooks/usePolling";
 import { useGlobalState } from "@/hooks/useGlobalState";
-import Decimal from 'decimal.js';
-
-let isUpdating = false; // 全局状态锁
+import Decimal from "decimal.js";
 
 // 高效数组合并
 const mergeLists = (oldList: CombinedItem[], newList: CombinedItem[]) => {
@@ -23,20 +21,28 @@ const mergeLists = (oldList: CombinedItem[], newList: CombinedItem[]) => {
   };
 
   const map = new Map(oldList.map((item) => [item.symbol, item]));
-
-  return newList.map((newItem) => {
+  const merged = newList.map((newItem) => {
     const existing = map.get(newItem.symbol);
-    // 保留未变化项的引用
     return existing && shallowEqual(existing, newItem) ? existing : newItem;
   });
+
+  // 保留数组引用（无变化时返回原数组）
+  if (
+    merged.length === oldList.length &&
+    merged.every((item, i) => item === oldList[i])
+  ) {
+    return oldList;
+  }
+  return merged;
 };
 
 const BalanceCard = () => {
+  const isUpdating = useRef<boolean>(false);
   const { dispatch } = useGlobalState();
   const [coinsList, setCoinsList] = useState<CombinedItem[]>([]);
   const getCoinList = async () => {
-    if (isUpdating) return;
-    isUpdating = true;
+    if (isUpdating.current) return;
+    isUpdating.current = true;
     try {
       const combinedRes = await getCombinedWalletData();
       setCoinsList((prev) => {
@@ -44,18 +50,22 @@ const BalanceCard = () => {
         return mergeLists(prev, combinedRes);
       });
       const total = combinedRes?.reduce((acc: number, cur: CombinedItem) => {
-        return new Decimal(acc).plus(cur.usdMount).toFixed(2) ;
+        return new Decimal(acc).plus(cur.usdMount).toFixed(2);
       }, 0);
       dispatch({ type: "UPDATE_ACCOUNT", payload: total });
     } catch (error) {
       //todo
       console.error(error);
     } finally {
-      isUpdating = false;
+      isUpdating.current = false;
     }
   };
 
-  usePolling(getCoinList, 500);
+  usePolling(() => {
+    if (document.visibilityState === "visible") {
+      getCoinList();
+    }
+  }, 500);
 
   return (
     <ErrorBoundary
