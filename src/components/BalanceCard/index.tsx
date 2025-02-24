@@ -86,6 +86,7 @@ const BalanceCard = () => {
     >
       <div className={styles.card}>
         <div className={styles.list}>
+          {/* 数据量大可以考虑虚拟滚动 */}
           {coinsList?.length ? (
             coinsList.map((currency) => (
               <CurrencyItem key={currency.code} currency={currency} />
